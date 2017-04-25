@@ -13,8 +13,7 @@ class Motorbike extends MotorVehicle implements RackMountable {
 
 	private $rackMounted = false;
 
-	public function drive(int $distance)
-	{
+	public function drive(int $distance): void {
 		parent::drive($distance);
 
 		if($this->location >= self::BREAK_AFTER) {
@@ -22,22 +21,19 @@ class Motorbike extends MotorVehicle implements RackMountable {
 		}
 	}
 
-	public function mountRack()
-	{
+	public function mountRack(): void {
 		$this->printMessage('Mounting rack on motorbike...');
 		$this->rackMounted = true;
 		$this->printMessage('This just looks ridiculous');
 	}
 
-	public function dismountRack()
-	{
+	public function dismountRack(): void {
 		$this->printMessage('Dismounting rack from motorbike...');
 		$this->rackMounted = false;
 		$this->printMessage('Much better');
 	}
 
-	public function isRackMounted(): bool
-	{
+	public function isRackMounted(): bool {
 		return $this->rackMounted;
 	}
 }

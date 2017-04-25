@@ -12,7 +12,7 @@ abstract class Vehicle {
 		$this->size = $size;
 	}
 
-	public function drive(int $distance) {
+	public function drive(int $distance):void {
 		echo get_class($this) . ' driving ' . $distance . ' km'.'<br>';
 		$this->location += $distance;
 	}

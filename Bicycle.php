@@ -11,21 +11,18 @@ class Bicycle extends Vehicle implements RackMountable {
 
 	private $rackMounted = false;
 
-	public function mountRack()
-	{
+	public function mountRack(): void {
 		$this->printMessage('Mounting rack on bicycle...');
 		$this->rackMounted = true;
 		$this->printMessage('Ready for an adventure into the nature!');
 	}
 
-	public function dismountRack()
-	{
+	public function dismountRack(): void {
 		$this->printMessage('Dismounting rack from bicycle...');
 		$this->rackMounted = false;
 	}
 
-	public function isRackMounted(): bool
-	{
+	public function isRackMounted(): bool {
 		return $this->rackMounted;
 	}
 }
