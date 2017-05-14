@@ -2,7 +2,7 @@
 
 // Data source name
 $dsn = 'mysql:dbname=cakephp;host=127.0.0.1';
-$user = 'cakephp';
+$user = 'cars';
 $password = '';
 
 // Try to connect to the database
