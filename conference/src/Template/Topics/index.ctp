@@ -2,19 +2,22 @@
 /* @var $topics \App\Model\Entity\Topic[] */
 ?>
 
-<table class="striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th></th>
-        </tr>
-    </thead>
+<header>
+    <h1>Join our conference</h1>
+    <p>Get more details about available topics and presentations here</p>
+</header>
+<section class="tiles">
     <?php foreach($topics as $topic): ?>
-        <tr>
-            <td><?= $topic->title ?></td>
-            <td><?= $topic->user->name ?> <?= $topic->user->surname ?></td>
-            <td><?= $this->Html->link('Details', ['action' =>'view', $topic->id]) ?></td>
-        </tr>
+        <article>
+        <span class="image">
+            <?= $this->Html->image('pic' . $topic->id . '.jpg') ?>
+        </span>
+            <a href="<?= $this->Url->build(['action' =>'view', $topic->id]) ?>">
+                <h2><?= $topic->title ?></h2>
+                <div class="content">
+                    <p><?= $topic->teaser ?></p>
+                </div>
+            </a>
+        </article>
     <?php endforeach; ?>
-</table>
+</section>

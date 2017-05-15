@@ -1,65 +1,83 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
-?>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
 <head>
+    <title>conference: <?= $this->fetch('title') ?></title>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><?= $this->Html->script('ie/html5shiv.js') ?><![endif]-->
+    <?= $this->Html->css('main.css') ?>
+    <!--[if lte IE 9]><?= $this->Html->css('ie9.css') ?><![endif]-->
+    <!--[if lte IE 8]><?= $this->Html->css('ie8.css') ?><![endif]-->
+    <?= $this->Html->css('custom.css') ?>
+
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-    <nav>
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">conference</a>
-            <ul class="right hide-on-med-and-down">
-                <li><?= $this->Html->link('Topics', ['controller' => 'topics']) ?></li>
-            </ul>
+<!-- Wrapper -->
+<div id="wrapper">
 
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+
+            <!-- Logo -->
+            <a href="<?= $this->Url->build(['controller' => 'topics', 'action' => 'index']) ?>" class="logo">
+                <span class="symbol"><?= $this->Html->image('logo.svg') ?></span><span class="title">cakePHP conference</span>
+            </a>
+
+            <!-- Nav -->
+            <nav>
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                </ul>
+            </nav>
+
         </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+            <li><?= $this->Html->link('Topics', ['controller' => 'topics']) ?></li>
+        </ul>
     </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container">
-        <?= $this->fetch('content') ?>
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <?= $this->fetch('content') ?>
+
+            <?= $this->Flash->render() ?>
+        </div>
     </div>
-    <footer>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="copyright">
+                <li>&copy; Dennis Westphal. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</div>
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<!-- Scripts -->
+<?= $this->Html->script('jquery.min.js') ?>
+<?= $this->Html->script('skel.min.js') ?>
+<?= $this->Html->script('util.js') ?>
+<!--[if lte IE 8]><?= $this->Html->script('ie/respond.min.js') ?></script><![endif]-->
+<?= $this->Html->script('main.js') ?>
+
 </body>
 </html>

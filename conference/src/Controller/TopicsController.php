@@ -12,9 +12,15 @@ namespace App\Controller;
 class TopicsController extends AppController {
 
     public function index() {
-        $topics = $this->Topics->find('all', [
+        $topics = $this->Topics->find('all');
+        $this->set('topics', $topics);
+    }
+
+    public function view(int $id) {
+        $topic = $this->Topics->get($id, [
             'contain' => ['Users']
         ]);
-        $this->set('topics', $topics);
+
+        $this->set('topic', $topic);
     }
 }
