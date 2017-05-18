@@ -16,9 +16,19 @@ class TopicsController extends AppController {
         $this->set('topics', $topics);
     }
 
+    public function author($id)
+    {
+        $topics = $this->Topics->find('authoredBy', [
+            'authorId' => $id
+        ]);
+        $this->set('topics', $topics);
+
+        $this->render('/Topics/index');
+    }
+
     public function view(int $id) {
         $topic = $this->Topics->get($id, [
-            'contain' => ['Users']
+            'contain' => ['Users', 'Presentations']
         ]);
 
         $this->set('topic', $topic);

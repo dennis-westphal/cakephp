@@ -86,4 +86,10 @@ class TopicsTable extends Table
 
         return $rules;
     }
+
+    public function findAuthoredBy(Query $query, array $options)
+    {
+        $authorId = $options['authorId'];
+        return $query->where(['author_id' => $authorId]);
+    }
 }
