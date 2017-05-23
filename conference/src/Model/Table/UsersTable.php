@@ -95,4 +95,10 @@ class UsersTable extends Table
 
         return $rules;
     }
+
+    public function findAuthors(Query $query) {
+        return $query
+            ->select(['id', 'name' => 'CONCAT(name, " ", surname)'])
+            ->where(['type' => 'author']);
+    }
 }

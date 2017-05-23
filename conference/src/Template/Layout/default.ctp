@@ -55,9 +55,11 @@
     <!-- Main -->
     <div id="main">
         <div class="inner">
-            <?= $this->fetch('content') ?>
+            <div class="flash">
+                <?= $this->Flash->render() ?>
+            </div>
 
-            <?= $this->Flash->render() ?>
+            <?= $this->fetch('content') ?>
         </div>
     </div>
 

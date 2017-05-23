@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+
 /**
  * Topics Controller
  *
@@ -10,6 +12,12 @@ namespace App\Controller;
  * @method \App\Model\Entity\Topic[] paginate($object = null, array $settings = [])
  */
 class TopicsController extends AppController {
+    public function initialize() {
+        parent::initialize();
+
+        // Load the flash component so it can be used it controller methods
+        $this->loadComponent('Flash');
+    }
 
     public function index() {
         $topics = $this->Topics->find('all');
@@ -32,5 +40,25 @@ class TopicsController extends AppController {
         ]);
 
         $this->set('topic', $topic);
+    }
+
+    public function add() {
+        $topic = $this->Topics->newEntity();
+
+        if ($this->request->is('post')) {
+            $topic = $this->Topics->patchEntity($topic, $this->request->getData());
+
+            if ($this->Topics->save($topic)) {
+                $this->Flash->success('The topic has been saved.');
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error('The topic could not be saved.');
+        }
+
+        $usersTable = TableRegistry::get('Users');
+        $authors = $usersTable->find('list')->find('authors');
+
+        $this->set('topic', $topic);
+        $this->set('authors', $authors);
     }
 }
