@@ -49,6 +49,7 @@
         <h2>Menu</h2>
         <ul>
             <li><?= $this->Html->link('Topics', ['controller' => 'topics']) ?></li>
+            <li><?= $this->Html->link('Logout', ['controller' => 'users', 'action' => 'logout']) ?></li>
         </ul>
     </nav>
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -17,6 +18,20 @@ class TopicsController extends AppController {
 
         // Load the flash component so it can be used it controller methods
         $this->loadComponent('Flash');
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->allow(['index', 'author', 'view']);
+        $this->Auth->setConfig('authorize', ['Controller']);
+    }
+
+    public function isAuthorized($user = null) {
+        if ($this->request->getParam('action') === 'add') {
+            return !empty($user) && $user['type'] === 'author';
+        }
+
+        return true;
     }
 
     public function index() {
