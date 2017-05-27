@@ -25,3 +25,7 @@ div.flash div.message.success {
 form .error-message {
     color:#990000;
 }
+
+#header nav ul li {
+    margin-left:.6em;
+}
