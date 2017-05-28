@@ -36,14 +36,28 @@ class TopicsController extends AppController {
     }
 
     public function index() {
-        $topics = $this->Topics->find('all');
+        $this->paginate = [
+            'limit' => 3,
+            'contain' => ['Users'],
+            'sortWhitelist' => ['title', 'created', 'Users.surname']
+        ];
+
+        if($this->request->getData('search')) {
+            $this->paginate['finder'] = ['search' => ['term' => $this->request->getData('search')]];
+        }
+        $topics = $this->paginate($this->Topics);
         $this->set('topics', $topics);
     }
 
     public function author(int $id) {
-        $topics = $this->Topics->find('authoredBy', [
-            'authorId' => $id
-        ]);
+        $this->paginate = [
+            'limit' => 3,
+            'contain' => ['Users'],
+            'sortWhitelist' => ['title', 'created', 'Users.surname'],
+            'finder' => ['authoredBy' => ['authorId' => $id]]
+        ];
+
+        $topics = $this->paginate($this->Topics);
         $this->set('topics', $topics);
 
         if($this->Auth->user('id') !== $id) {

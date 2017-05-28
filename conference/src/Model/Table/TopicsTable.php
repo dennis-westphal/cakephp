@@ -92,4 +92,19 @@ class TopicsTable extends Table
         $authorId = $options['authorId'];
         return $query->where(['author_id' => $authorId]);
     }
+
+    public function findSearch(Query $query, array $options)
+    {
+        if(isset($options['term']) && !empty($options['term'])) {
+            $term = $options['term'];
+
+            $query
+                ->where(['title LIKE' => '%'.$term.'%'])
+                ->orWhere(['teaser LIKE' => '%'.$term.'%'])
+                ->orWhere(['Users.name LIKE' => '%'.$term.'%'])
+                ->orWhere(['Users.surname LIKE' => '%'.$term.'%'])
+            ;
+        }
+        return $query;
+    }
 }

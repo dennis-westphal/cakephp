@@ -6,6 +6,16 @@
     <h1>Join our conference</h1>
     <p>Get more details about available topics and presentations here</p>
 </header>
+<section class="sort">
+    Sort by: &nbsp;
+    <?= $this->Paginator->sort('title', 'Title') ?> |
+    <?= $this->Paginator->sort('Users.surname', 'Author') ?> |
+    <?= $this->Paginator->sort('created', 'Created') ?> &nbsp;
+
+    <?= $this->Form->create(null, ['url' => ['action' => 'index']]) ?>
+    <?= $this->Form->text('search', ['type' => 'search', 'placeholder' => 'Search']) ?>
+    <?= $this->Form->end() ?>
+</section>
 <section class="tiles">
     <?php foreach($topics as $topic): ?>
         <article>
@@ -20,4 +30,7 @@
             </a>
         </article>
     <?php endforeach; ?>
+</section>
+<section id="pagination">
+    <?= $this->Paginator->numbers() ?>
 </section>

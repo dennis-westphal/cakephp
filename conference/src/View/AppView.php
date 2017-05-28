@@ -36,5 +36,12 @@ class AppView extends View
      */
     public function initialize()
     {
+        $this->Paginator->setTemplates([
+            'number' => '<a class="button" href="{{url}}">{{text}}</a>',
+            'current' => '<a class="current button" href="{{url}}">{{text}}</a>',
+            'sort' => '<a href="{{url}}">{{text}}</a>',
+            'sortAsc' => '<a href="{{url}}" class="icon style1 fa-sort-asc"> {{text}}</a>',
+            'sortDesc' => '<a href="{{url}}" class="icon style1 fa-sort-desc"> {{text}}</a>'
+        ]);
     }
 }
