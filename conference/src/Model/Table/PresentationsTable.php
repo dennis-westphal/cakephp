@@ -41,6 +41,10 @@ class PresentationsTable extends Table
             'foreignKey' => 'topic_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Rooms', [
+            'foreignKey' => 'room_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsToMany('Users', [
             'foreignKey' => 'presentation_id',
             'targetForeignKey' => 'user_id',

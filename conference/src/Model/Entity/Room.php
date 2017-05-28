@@ -4,18 +4,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Presentation Entity
+ * Room Entity
  *
  * @property int $id
- * @property int $topic_id
- * @property \Cake\I18n\FrozenTime $date
- * @property int $freeSpots
+ * @property string $name
  *
- * @property \App\Model\Entity\Topic $topic
- * @property \App\Model\Entity\Room $room
- * @property \App\Model\Entity\User[] $users
+ * @property \App\Model\Entity\Presentation[] $presentations
  */
-class Presentation extends Entity
+class Room extends Entity
 {
 
     /**
