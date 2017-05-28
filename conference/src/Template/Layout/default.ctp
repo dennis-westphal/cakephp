@@ -37,6 +37,15 @@
             <!-- Nav -->
             <nav>
                 <ul>
+                    <li><?= $this->Html->link('Topics', ['controller' => 'topics']) ?></li>
+                    <?php if($userType === 'author'): ?>
+                    <li><?= $this->Html->link('Your Topics', ['controller' => 'topics', 'action' => 'author', $userId]) ?></li>
+                    <?php endif; ?>
+                    <?php if($userType === 'guest'): ?>
+                        <li><?= $this->Html->link('Login', ['controller' => 'users', 'action' => 'login']) ?></li>
+                    <?php else: ?>
+                        <li><?= $this->Html->link('Logout', ['controller' => 'users', 'action' => 'logout']) ?></li>
+                    <?php endif; ?>
                     <li><a href="#menu">Menu</a></li>
                 </ul>
             </nav>
@@ -49,7 +58,14 @@
         <h2>Menu</h2>
         <ul>
             <li><?= $this->Html->link('Topics', ['controller' => 'topics']) ?></li>
-            <li><?= $this->Html->link('Logout', ['controller' => 'users', 'action' => 'logout']) ?></li>
+            <?php if($userType === 'author'): ?>
+                <li><?= $this->Html->link('Your Topics', ['controller' => 'topics', 'action' => 'author', $userId]) ?></li>
+            <?php endif; ?>
+            <?php if($userType === 'guest'): ?>
+                <li><?= $this->Html->link('Login', ['controller' => 'users', 'action' => 'login']) ?></li>
+            <?php else: ?>
+                <li><?= $this->Html->link('Logout', ['controller' => 'users', 'action' => 'logout']) ?></li>
+            <?php endif; ?>
         </ul>
     </nav>
 

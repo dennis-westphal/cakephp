@@ -33,4 +33,8 @@ class Topic extends Entity
         '*' => true,
         'id' => false
     ];
+
+    public function userIsAuthor(int $userId) {
+        return $userId === $this->author_id;
+    }
 }

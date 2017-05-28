@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\Topic;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
@@ -39,14 +40,15 @@ class TopicsController extends AppController {
         $this->set('topics', $topics);
     }
 
-    public function author($id)
-    {
+    public function author(int $id) {
         $topics = $this->Topics->find('authoredBy', [
             'authorId' => $id
         ]);
         $this->set('topics', $topics);
 
-        $this->render('/Topics/index');
+        if($this->Auth->user('id') !== $id) {
+            $this->render('/Topics/index');
+        }
     }
 
     public function view(int $id) {
@@ -75,5 +77,53 @@ class TopicsController extends AppController {
 
         $this->set('topic', $topic);
         $this->set('authors', $authors);
+    }
+
+    public function edit(int $id) {
+        $topic = $this->Topics->get($id, [
+            'contain' => ['Users']
+        ]);
+
+        if ($this->request->is(['put', 'post', 'patch'])) {
+            if(!$topic->userIsAuthor($this->Auth->user('id'))) {
+                $this->Flash->error('You are not authorized to edit this topic.');
+                return $this->redirect(['action' => 'author', $this->Auth->user('id')]);
+            }
+
+            $topic = $this->Topics->patchEntity($topic, $this->request->getData());
+
+            if ($this->Topics->save($topic)) {
+                $this->Flash->success('The topic has been updated.');
+                return $this->redirect(['action' => 'author', $this->Auth->user('id')]);
+            }
+
+            $this->Flash->error('The topic could not be updated.');
+        }
+
+        $usersTable = TableRegistry::get('Users');
+        $authors = $usersTable->find('list')->find('authors');
+
+        $this->set('topic', $topic);
+        $this->set('authors', $authors);
+    }
+
+    public function delete(int $id) {
+        $this->request->allowMethod(['post', 'delete']);
+
+        $topic = $this->Topics->get($id);
+
+        if(!$topic->userIsAuthor($this->Auth->user('id'))) {
+            $this->Flash->error('You are not authorized to delete this topic.');
+            return $this->redirect(['action' => 'author']);
+        }
+
+        if ($this->Topics->delete($topic)) {
+            $this->Flash->success('The topic has been deleted.');
+        }
+        else {
+            $this->Flash->error('The topic could not be deleted.');
+        }
+
+        return $this->redirect(['action' => 'author']);
     }
 }

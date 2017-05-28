@@ -54,6 +54,15 @@ class AppController extends Controller
             ]
         ]);
 
+        $user = $this->Auth->user();
+        if(empty($user)) {
+            $this->set('userType', 'guest');
+        }
+        else {
+            $this->set('userType', $user['type']);
+            $this->set('userId', $user['id']);
+        }
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
