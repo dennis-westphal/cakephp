@@ -12,3 +12,8 @@ echo $this->Form->control('author_id', [
 ]);
 echo $this->Form->submit('Save');
 echo $this->Form->end();
+
+echo $this->Html->link('Manage presentations',
+    ['controller' => 'presentations', $topic->id],
+    ['class' => 'button']
+);

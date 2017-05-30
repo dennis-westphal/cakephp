@@ -14,6 +14,7 @@
     <!--[if lte IE 9]><?= $this->Html->css('ie9.css') ?><![endif]-->
     <!--[if lte IE 8]><?= $this->Html->css('ie8.css') ?><![endif]-->
     <?= $this->Html->css('custom.css') ?>
+    <?= $this->Html->css('jquery-ui.min.css') ?>
 
     <?= $this->Html->meta('icon') ?>
 
@@ -93,10 +94,11 @@
 
 <!-- Scripts -->
 <?= $this->Html->script('jquery.min.js') ?>
+<?= $this->Html->script('jquery-ui.min.js') ?>
 <?= $this->Html->script('skel.min.js') ?>
 <?= $this->Html->script('util.js') ?>
 <!--[if lte IE 8]><?= $this->Html->script('ie/respond.min.js') ?></script><![endif]-->
 <?= $this->Html->script('main.js') ?>
-
+<?= $this->fetch('scriptBottom') ?>
 </body>
 </html>

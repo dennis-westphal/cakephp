@@ -72,6 +72,13 @@ Router::scope('/', function (RouteBuilder $routes) {
     // Connect all the other topic actions to a shorter url
     $routes->connect('/t/:action', ['controller' => 'topics']);
 
+    $routes->scope('/presentations', function (RouteBuilder $routes) {
+        $routes->extensions(['json', 'xml']);
+
+        $routes->connect('/:action', ['controller' => 'Presentations']);
+        $routes->connect('/:action/*', ['controller' => 'Presentations']);
+    });
+
     $routes->fallbacks(DashedRoute::class);
 });
 

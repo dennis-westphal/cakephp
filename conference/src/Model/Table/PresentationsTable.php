@@ -22,6 +22,11 @@ use Cake\Validation\Validator;
  */
 class PresentationsTable extends Table
 {
+    const MIN_DATE = '2017-06-20';
+    const MAX_DATE = '2017-06-22';
+
+    const MIN_TIME = '09:00';
+    const MAX_TIME = '16:30';
 
     /**
      * Initialize method
