@@ -67,7 +67,7 @@ class TopicsController extends AppController {
 
     public function view(int $id) {
         $topic = $this->Topics->get($id, [
-            'contain' => ['Users', 'Presentations']
+            'contain' => ['Users', 'Presentations', 'Presentations.Rooms']
         ]);
 
         $this->set('topic', $topic);

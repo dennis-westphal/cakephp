@@ -13,6 +13,7 @@
     <thead>
     <tr>
         <th>Date</th>
+        <th>Room</th>
         <th>Free places</th>
         <th></th>
     </tr>
@@ -21,6 +22,7 @@
     <?php foreach($topic->presentations as $presentation): ?>
     <tr>
         <td><?= $presentation->date->format('d.m.Y H:i:s') ?></td>
+        <td><?= $presentation->room->name ?></td>
         <td><?= $presentation->freeSpots ?></td>
         <td><?= $this->Html->link('Register', ['controller' => 'presentations', 'action' => 'register', $presentation->id]) ?></td>
     </tr>
