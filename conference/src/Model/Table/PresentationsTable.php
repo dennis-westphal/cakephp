@@ -22,11 +22,14 @@ use Cake\Validation\Validator;
  */
 class PresentationsTable extends Table
 {
-    const MIN_DATE = '2017-06-20';
-    const MAX_DATE = '2017-06-22';
-
-    const MIN_TIME = '09:00';
-    const MAX_TIME = '16:30';
+    const DATE_TIME_OPTIONS = [
+        'dateFormat' => 'd.m.Y',
+        'minDate' => '20.06.2017',
+        'maxDate' => '22.06.2017',
+        'minTime' => '9:00am',
+        'maxTime' => '16:30pm',
+        'interval' => 30
+    ];
 
     /**
      * Initialize method
@@ -92,6 +95,7 @@ class PresentationsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['topic_id'], 'Topics'));
+        $rules->add($rules->existsIn(['room_id'], 'Rooms'));
 
         return $rules;
     }

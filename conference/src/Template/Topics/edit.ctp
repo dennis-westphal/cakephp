@@ -14,6 +14,6 @@ echo $this->Form->submit('Save');
 echo $this->Form->end();
 
 echo $this->Html->link('Manage presentations',
-    ['controller' => 'presentations', $topic->id],
+    ['controller' => 'presentations', 'action' => 'manage', $topic->id],
     ['class' => 'button']
 );
