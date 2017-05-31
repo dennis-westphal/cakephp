@@ -56,9 +56,6 @@
 </script>
 
 <?php
-    $this->Html->script('moment.min.js', ['block' => 'scriptBottom']);
-    $this->Html->script('jquery.timepicker.min.js', ['block' => 'scriptBottom']);
-    $this->Html->css('jquery.timepicker', ['block' => 'css']);
-
+    // Add script the presentations javascript that is used to handle the input fields
     $this->Html->script('presentations.js', ['block' => 'scriptBottom']);
 ?>

@@ -35,24 +35,37 @@ class PresentationsController extends AppController {
         $this->set('_serialize', false);
     }
 
+    /**
+     * Manage presentations for a topic
+     *
+     * @param int $topicId
+     *
+     * @return \Cake\Http\Response|null
+     */
     public function manage(int $topicId) {
+        // Get the topic first
         $topicsTable = TableRegistry::get('Topics');
         $topic = $topicsTable->get($topicId, [
             'contain' => ['Users', 'Presentations', 'Presentations.Rooms']
         ]);
+
+        // Check if we have a topic
+        if(empty($topic)) {
+            $this->Flash->error('Topic not found.');
+            return $this->redirect(['controller' => 'topics', 'action' => 'author']);
+        }
+
+        // Check if the user is authorized to add presentations to the topic
+        if($topic->user->id !== $this->Auth->user('id')) {
+            $this->Flash->error('You are not authorized to access this topic.');
+            return $this->redirect(['controller' => 'topics', 'action' => 'author']);
+        }
+
+        // Get the available rooms
         $roomsTable = TableRegistry::get('Rooms');
         $rooms = $roomsTable->find('list')->toArray();
 
-        if(empty($topic)) {
-            $this->Flash->error('Topic not found.');
-            return $this->redirect(['controller' => 'topics']);
-        }
-
-        if($topic->user->id !== $this->Auth->user('id')) {
-            $this->Flash->error('You are not authorized to access this topic.');
-            return $this->redirect(['controller' => 'topics']);
-        }
-
+        // Set the topic, rooms and the options for the date and time input fields
         $this->set([
             'topic' => $topic,
             'rooms' => $rooms,
@@ -60,34 +73,52 @@ class PresentationsController extends AppController {
         ]);
     }
 
+    /**
+     * Add a new presentation for a topic
+     *
+     * @param int $topicId
+     *
+     * @return \Cake\Http\Response|null
+     */
     public function add(int $topicId) {
+        // Only allow form posts
         $this->request->allowMethod('post');
-        $topicsTable = TableRegistry::get('Topics');
 
+        // Get the topic
+        $topicsTable = TableRegistry::get('Topics');
         $topic = $topicsTable->get($topicId);
 
+        // Check if the topic exists
+        if(empty($topic)) {
+            $this->Flash->error('Topic not found.');
+            return $this->redirect(['controller' => 'topics', 'action' => 'author']);
+        }
+
+        // Check if the user is authorized to add presentations to the topic
         if(!$topic->userIsAuthor($this->Auth->user('id'))) {
             $this->Flash->error('You are not authorized to add presentations to this topic.');
             return $this->redirect(['controller' => 'topics', 'action' => 'author']);
         }
 
+        // Create a new presentation
         $presentation = $this->Presentations->newEntity([
-            'topic_id' => $topicId,
-            'room_id' => $this->request->getData('room'),
-            'date' => Time::createFromFormat(
+            'topic_id' => $topicId, // Use the topic id passed in the url
+            'room_id' => $this->request->getData('room'), // Use the room id sent with the form
+            'date' => Time::createFromFormat( // Create a Date object based on the sent date and time
                 'd.m.Y H:i',
                 $this->request->getData('date').' '.$this->request->getData('time')
             ),
-            'freeSpots' => 10
+            'freeSpots' => 10 // Use a fixed number of free spots for now
         ]);
 
+        // Try to save the presentation
         if ($this->Presentations->save($presentation)) {
             $this->Flash->success('The presentation has been saved.');
             return $this->redirect(['action' => 'manage', $topicId]);
         }
 
+        // Display an error message if saving didn't work
         $this->Flash->error('The presentation could not be saved.');
-
         return $this->redirect(['action' => 'manage', $topicId]);
     }
 }
