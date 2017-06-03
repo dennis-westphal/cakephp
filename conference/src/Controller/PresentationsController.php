@@ -118,7 +118,13 @@ class PresentationsController extends AppController {
         }
 
         // Display an error message if saving didn't work
-        $this->Flash->error('The presentation could not be saved.');
+        $message = 'The presentation could not be saved.';
+        foreach($presentation->getErrors() as $field => $errors) {
+            $message .= '<br>'.ucfirst($field).': ';
+
+            $message .= join('; ', $errors);
+        }
+        $this->Flash->error($message, ['escape' => false]);
         return $this->redirect(['action' => 'manage', $topicId]);
     }
 }

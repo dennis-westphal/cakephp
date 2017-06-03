@@ -1,7 +1,8 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
+use Cake\I18n\Date;
+use Cake\I18n\Time;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -75,7 +76,22 @@ class PresentationsTable extends Table
         $validator
             ->dateTime('date')
             ->requirePresence('date', 'create')
-            ->notEmpty('date');
+            ->notEmpty('date')
+            ->add('date', 'inInterval', [
+                'rule' => function(Time $value, $context) {
+                    return $value->minute % self::DATE_TIME_OPTIONS['interval'] == 0;
+                },
+                'message' => 'has to be in '.self::DATE_TIME_OPTIONS['interval'].' intervals'
+            ])
+            ->add('date', 'inTimeFrame', [
+                'rule' => function(Time $value, $context) {
+                    $minDate = Date::createFromFormat(self::DATE_TIME_OPTIONS['dateFormat'], self::DATE_TIME_OPTIONS['minDate']);
+                    $maxDate = Date::createFromFormat(self::DATE_TIME_OPTIONS['dateFormat'], self::DATE_TIME_OPTIONS['maxDate']);
+
+                    return $value >= $minDate && $value <= $maxDate;
+                },
+                'message' => 'has to be between '.self::DATE_TIME_OPTIONS['minDate'].' and '.self::DATE_TIME_OPTIONS['maxDate']
+            ]);
 
         $validator
             ->integer('freeSpots')
@@ -96,6 +112,11 @@ class PresentationsTable extends Table
     {
         $rules->add($rules->existsIn(['topic_id'], 'Topics'));
         $rules->add($rules->existsIn(['room_id'], 'Rooms'));
+
+        $rules->addCreate($rules->isUnique(
+            ['date', 'room_id'],
+            'This timeslot is already used.'
+        ));
 
         return $rules;
     }
