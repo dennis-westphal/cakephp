@@ -73,7 +73,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/t/:action', ['controller' => 'topics']);
 
     $routes->scope('/presentations', function (RouteBuilder $routes) {
-        $routes->extensions(['json', 'xml']);
+        $routes->extensions(['json', 'xml', 'pdf']);
 
         $routes->connect('/:action', ['controller' => 'Presentations']);
         $routes->connect('/:action/*', ['controller' => 'Presentations']);

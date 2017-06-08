@@ -15,7 +15,7 @@ use Cake\ORM\TableRegistry;
  */
 class PresentationsController extends AppController {
     public function beforeFilter(Event $event) {
-        $this->Auth->allow(['topic', 'room']);
+        $this->Auth->allow(['topic', 'room', 'all']);
     }
 
     public function topic(int $topicId) {
@@ -33,6 +33,21 @@ class PresentationsController extends AppController {
             'interval' => $this->Presentations::DATE_TIME_OPTIONS['interval']
         ]);
         $this->set('_serialize', false);
+    }
+
+    public function all()
+    {
+        $this->set('presentations', $this->Presentations->find('all', [
+            'contain' => ['Topics', 'Rooms']
+        ]));
+
+        $this->viewBuilder()
+            ->setClassName('Dompdf.Pdf')
+            ->setLayout('Dompdf.default')
+            ->setOptions(['config' => [
+                'filename' => 'presentations.pdf',
+                'render' => 'browser',
+            ]]);
     }
 
     /**
