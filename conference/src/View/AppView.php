@@ -43,5 +43,7 @@ class AppView extends View
             'sortAsc' => '<a href="{{url}}" class="icon style1 fa-sort-asc"> {{text}}</a>',
             'sortDesc' => '<a href="{{url}}" class="icon style1 fa-sort-desc"> {{text}}</a>'
         ]);
+
+        $this->loadHelper('Countdown');
     }
 }
